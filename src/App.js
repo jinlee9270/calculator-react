@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Btn, Result, Container} from './styled.js';
 
-let result = 0
 
 function App() {
+  let [result, setResult]  = useState(0)
+  
   return (
     <Container>
       <div>
-        <Btn>C</Btn>
+        <Result>results : {result}</Result>
+        <Btn onClick={() => {setResult(result = 0)}}>C</Btn>
         <Btn>()</Btn>
         <Btn>%</Btn>
         <Btn>/</Btn>
@@ -36,7 +38,6 @@ function App() {
         <Btn>.</Btn>
         <Btn>=</Btn>
       </div>
-      <Result>results : {result}</Result>
     </Container>
   );
 }
