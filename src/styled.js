@@ -12,6 +12,8 @@ export const Result = styled.div`
     margin: 5px;
     color: white;
     background-color: #898989;
+    width: 420px;
+    padding: 3px 0px 0px 10px;
 `
 
 export const Container = styled.div`
