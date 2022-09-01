@@ -5,26 +5,59 @@ import {NumBtn, OperBtn, ExtraBtn, Result, Container} from './styled.js';
 function App() {
   let [result, setResult]  = useState('')
   let [num,setNum] = useState('0')
-  let [isOper, setisOper] = useState(false)
+  let [isOper, setisOper] = useState('')
+
+  const inputData = (data) => {
+    if (result === ''){
+      setResult(result = data)
+    }
+    else {
+      setResult(result + data)
+    }
+  }
 
   const SignToggle = () => {
     setResult(-result)
   }
 
   const handleKeypress = (e) => {
-    if (e.key === 'enter' || e.key === '=') {
-      //계산 결과 내기
+    console.log(0, e.keyCode)
+    if (e.keyCode == 13) {
+      let answer = 0
+      if (isOper === '+') {
+        answer = num + parseFloat(result)
+        console.log(num, isOper, result, answer)
+      }
+      else if (isOper === '-') {
+        answer = num - parseFloat(result)
+      }
+      else if (isOper === '*') {
+        answer = num * parseFloat(result)
+      }
+      else if (isOper === '/') {
+        answer = num / parseFloat(result)
+      }
+      setResult(answer)
+      // setNum(num = 0)
+      // setisOper(isOper = '')
     }
     else if (e.key === 'c') {
       setResult('')
     }
     else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/' || e.key === '%') {
-      let temp = Number(document.getElementById('result').innerText)
-      setNum(num = temp)
+      setNum(num = parseFloat(result))
+      setResult('')
       setisOper(isOper = e.key)
+      // console.log(1, e.key, num, isOper)
     }
-    else {
-      setResult(result + e.key)
+    else if (0 <= parseInt(e.key) && parseInt(e.key) <= 9) {
+      // console.log(2, e.key, parseInt(e.key))
+      if (isOper === '') {
+        setResult(result + e.key)
+      }
+      else {
+        setResult(result = e.key)
+      }
     }
   }
 
@@ -34,31 +67,31 @@ function App() {
       <div>
         <ExtraBtn onClick={() => {setResult('')}}>AC</ExtraBtn>
         <ExtraBtn onClick={SignToggle}>+/-</ExtraBtn>
-        <ExtraBtn onClick={() => {setResult(result)}} onKeyUp={handleKeypress}>%</ExtraBtn>
-        <OperBtn onClick={() => {setResult(result)}} onKeyUp={handleKeypress}>÷</OperBtn>
+        <ExtraBtn onClick={handleKeypress} onKeyUp={handleKeypress}>%</ExtraBtn>
+        <OperBtn onClick={handleKeypress} onKeyUp={handleKeypress}>÷</OperBtn>
       </div>
       <div>
-        <NumBtn onClick={() => {setResult(result + '7')}} onKeyUp={handleKeypress}>7</NumBtn>
-        <NumBtn onClick={() => {setResult(result + '8')}} onKeyUp={handleKeypress}>8</NumBtn>
-        <NumBtn onClick={() => {setResult(result + '9')}} onKeyUp={handleKeypress}>9</NumBtn>
-        <OperBtn onClick={() => {setResult(result)}} onKeyUp={handleKeypress}>x</OperBtn>
+        <NumBtn onClick={() => {inputData('7')}} onKeyUp={handleKeypress}>7</NumBtn>
+        <NumBtn onClick={() => {inputData('8')}} onKeyUp={handleKeypress}>8</NumBtn>
+        <NumBtn onClick={() => {inputData('9')}} onKeyUp={handleKeypress}>9</NumBtn>
+        <OperBtn onClick={handleKeypress} onKeyUp={handleKeypress}>x</OperBtn>
       </div>
       <div>
-        <NumBtn onClick={() => {setResult(result + '4')}} onKeyUp={handleKeypress}>4</NumBtn>
-        <NumBtn onClick={() => {setResult(result + '5')}} onKeyUp={handleKeypress}>5</NumBtn>
-        <NumBtn onClick={() => {setResult(result + '6')}} onKeyUp={handleKeypress}>6</NumBtn>
-        <OperBtn onClick={() => {setResult(result)}} onKeyUp={handleKeypress}>−</OperBtn>
+        <NumBtn onClick={() => {inputData('4')}} onKeyUp={handleKeypress}>4</NumBtn>
+        <NumBtn onClick={() => {inputData('5')}} onKeyUp={handleKeypress}>5</NumBtn>
+        <NumBtn onClick={() => {inputData('6')}} onKeyUp={handleKeypress}>6</NumBtn>
+        <OperBtn onClick={handleKeypress} onKeyUp={handleKeypress}>−</OperBtn>
       </div>
       <div>
-        <NumBtn onClick={() => {setResult(result + '1')}} onKeyUp={handleKeypress}>1</NumBtn>
-        <NumBtn onClick={() => {setResult(result + '2')}} onKeyUp={handleKeypress}>2</NumBtn>
-        <NumBtn onClick={() => {setResult(result + '3')}} onKeyUp={handleKeypress}>3</NumBtn>
-        <OperBtn onClick={() => {setResult(result)}} onKeyUp={handleKeypress}>+</OperBtn>
+        <NumBtn onClick={() => {inputData('1')}} onKeyUp={handleKeypress}>1</NumBtn>
+        <NumBtn onClick={() => {inputData('2')}} onKeyUp={handleKeypress}>2</NumBtn>
+        <NumBtn onClick={() => {inputData('3')}} onKeyUp={handleKeypress}>3</NumBtn>
+        <OperBtn onClick={handleKeypress} onKeyUp={handleKeypress}>+</OperBtn>
       </div>
       <div>
-        <NumBtn onClick={() => {setResult(result + '0')}} onKeyUp={handleKeypress}>0</NumBtn>
-        <NumBtn onClick={() => {setResult(result + '.')}} onKeyUp={handleKeypress}>.</NumBtn>
-        <OperBtn>=</OperBtn>
+        <NumBtn onClick={() => {inputData('0')}} onKeyUp={handleKeypress}>0</NumBtn>
+        <NumBtn onClick={() => {inputData('.')}} onKeyUp={handleKeypress}>.</NumBtn>
+        <OperBtn onClick={handleKeypress} onKeyUp={handleKeypress}>=</OperBtn>
       </div>
     </Container>
   );
