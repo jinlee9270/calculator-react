@@ -8,11 +8,13 @@ function App() {
   let [isOper, setisOper] = useState(false)
 
   const SignToggle = () => {
-    let a = Number(document.getElementById('result').innerText)
+    let a = document.getElementById('result').innerText
     console.log(a)
-    if (a > 0) {
-      document.getElementById('result').innerText = -a
-      console.log(-a)
+    if (parseFloat(a) > 0) {
+      document.getElementById('result').innerText = -parseFloat(a)
+    }
+    else {
+      document.getElementById('result').innerText = -parseFloat(a)
     }
   }
 
@@ -35,7 +37,7 @@ function App() {
 
   return (
     <Container>
-      <Result id="result">results : {result}</Result>
+      <Result id="result">{result}</Result>
       <div>
         <ExtraBtn onClick={() => {setResult('')}}>AC</ExtraBtn>
         <ExtraBtn onClick={SignToggle}>+/-</ExtraBtn>
