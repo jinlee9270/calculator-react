@@ -4,7 +4,7 @@ import {ResultBox, NumBtn, OperBtn, ExtraBtn, Result, Container} from './styled.
 
 function App() {
   let [result, setResult]  = useState('')
-  let [num,setNum] = useState('0')
+  let [num,setNum] = useState('')
   let [isOper, setisOper] = useState('')
 
   const inputData = (data) => {
@@ -28,37 +28,60 @@ function App() {
     }
   }
 
+const OnKeyUp = (e) => {
+  const event = e.key
+  if (0 <= event && event <= 9){
+    console.log(event)
+    if (result === '') {
+      setResult(result = event)
+    }
+    else {
+      setResult(result + event)
+    }
+  }
+  else if (event == 'c' || event == 'esc') {
+    setResult('')
+    setNum('')
+    setisOper('')
+  }
+  else if (event == 'enter') {
+    //plus
+    //miinus
+    //multiple
+    //divide
+  }
+}
 
   return (
     <Container>
       <Result id="result">{result}</Result>
       <div>
-        <ExtraBtn onClick={() => {setResult('')}}>AC</ExtraBtn>
+        <ExtraBtn onKeyUp={OnKeyUp}>AC</ExtraBtn>
         <ExtraBtn onClick={SignToggle}>+/-</ExtraBtn>
         <ExtraBtn>%</ExtraBtn>
         <OperBtn>÷</OperBtn>
       </div>
       <div>
-        <NumBtn onClick={() => {inputData('7')}}>7</NumBtn>
-        <NumBtn onClick={() => {inputData('8')}}>8</NumBtn>
-        <NumBtn onClick={() => {inputData('9')}}>9</NumBtn>
+        <NumBtn onClick={() => {inputData('7')}} onKeyUp={OnKeyUp}>7</NumBtn>
+        <NumBtn onClick={() => {inputData('8')}} onKeyUp={OnKeyUp}>8</NumBtn>
+        <NumBtn onClick={() => {inputData('9')}} onKeyUp={OnKeyUp}>9</NumBtn>
         <OperBtn>x</OperBtn>
       </div>
       <div>
-        <NumBtn onClick={() => {inputData('4')}}>4</NumBtn>
-        <NumBtn onClick={() => {inputData('5')}}>5</NumBtn>
-        <NumBtn onClick={() => {inputData('6')}}>6</NumBtn>
+        <NumBtn onClick={() => {inputData('4')}} onKeyUp={OnKeyUp}>4</NumBtn>
+        <NumBtn onClick={() => {inputData('5')}} onKeyUp={OnKeyUp}>5</NumBtn>
+        <NumBtn onClick={() => {inputData('6')}} onKeyUp={OnKeyUp}>6</NumBtn>
         <OperBtn>−</OperBtn>
       </div>
       <div>
-        <NumBtn onClick={() => {inputData('1')}}>1</NumBtn>
-        <NumBtn onClick={() => {inputData('2')}}>2</NumBtn>
-        <NumBtn onClick={() => {inputData('3')}}>3</NumBtn>
+        <NumBtn onClick={() => {inputData('1')}} onKeyUp={OnKeyUp}>1</NumBtn>
+        <NumBtn onClick={() => {inputData('2')}} onKeyUp={OnKeyUp}>2</NumBtn>
+        <NumBtn onClick={() => {inputData('3')}} onKeyUp={OnKeyUp}>3</NumBtn>
         <OperBtn>+</OperBtn>
       </div>
       <div>
-        <NumBtn onClick={() => {inputData('0')}} >0</NumBtn>
-        <NumBtn onClick={() => {inputData('.')}} >.</NumBtn>
+        <NumBtn onClick={() => {inputData('0')}} onKeyUp={OnKeyUp}>0</NumBtn>
+        <NumBtn onClick={() => {inputData('.')}} onKeyUp={OnKeyUp}>.</NumBtn>
         <OperBtn >=</OperBtn>
       </div>
     </Container>
