@@ -8,9 +8,7 @@ function App() {
   let [isOper, setisOper] = useState(false)
 
   const SignToggle = () => {
-    let a = document.getElementById('result').innerText
-    // console.log(a)
-    document.getElementById('result').innerText = -parseFloat(a)
+    setResult(-result)
   }
 
   const handleKeypress = (e) => {
