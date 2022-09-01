@@ -9,13 +9,8 @@ function App() {
 
   const SignToggle = () => {
     let a = document.getElementById('result').innerText
-    console.log(a)
-    if (parseFloat(a) > 0) {
-      document.getElementById('result').innerText = -parseFloat(a)
-    }
-    else {
-      document.getElementById('result').innerText = -parseFloat(a)
-    }
+    // console.log(a)
+    document.getElementById('result').innerText = -parseFloat(a)
   }
 
   const handleKeypress = (e) => {
