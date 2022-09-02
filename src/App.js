@@ -31,32 +31,84 @@ function App() {
 const OnKeyUp = (e) => {
   const event = e.key
   if (0 <= event && event <= 9){
-    console.log(event)
-    if (result === '') {
-      setResult(result = event)
-    }
-    else {
-      setResult(result + event)
-    }
+    inputData(event)
   }
-  else if (event == 'c' || event == 'esc') {
-    setResult('')
-    setNum('')
-    setisOper('')
+  else if (event === 'c' || event === 'esc') {
+    ClearMemory()
   }
-  else if (event == 'enter') {
+  else if (event === '+' || event === '-' || event === '*' || event === '/') {
+    setNum(num = parseFloat(result))
+    setisOper(isOper = event)
+    if (isOper === '+'){
+      Plus()
+    }
+    // else if (isOper === '-'){
+    //   Minus()
+    // }
+    // else if (isOper === '*'){
+    //   Multiple()
+    // }
+    // else if (isOper === '/'){
+    //   Divide()
+    // }
+  }
+  else if (event === 'enter') {
     //plus
     //miinus
     //multiple
     //divide
+    console.log("enter")
   }
+}
+
+const Plus = (oper) => {
+  if (isOper === '') {
+    setNum(num = parseFloat(result))
+    setisOper(isOper = oper)
+  }
+  else {
+    if (isOper === '+') {
+      setResult(result = num + parseFloat(result))
+    }
+    else if (isOper === '-') {
+      setResult(result = num - parseFloat(result))
+    }
+    else if (isOper === '*') {
+      setResult(result = num * parseFloat(result))
+    }
+    else if (isOper === '/') {
+      setResult(result = num / parseFloat(result))
+    }
+  }
+  console.log(num, result)
+  // 순서 다시 확인 할 것
+  setResult(result = '')
+  setisOper(isOper = oper)
+}
+
+// const Minus = () => {
+
+// }
+
+// const Multiple = () => {
+
+// }
+
+// const Divide = () => {
+
+// }
+
+const ClearMemory = () => {
+  setResult(result =  '')
+  setNum(num = '')
+  setisOper(isOper = '')
 }
 
   return (
     <Container>
       <Result id="result">{result}</Result>
       <div>
-        <ExtraBtn onKeyUp={OnKeyUp}>AC</ExtraBtn>
+        <ExtraBtn onKeyUp={OnKeyUp} onClick={ClearMemory}>AC</ExtraBtn>
         <ExtraBtn onClick={SignToggle}>+/-</ExtraBtn>
         <ExtraBtn>%</ExtraBtn>
         <OperBtn>÷</OperBtn>
@@ -77,7 +129,7 @@ const OnKeyUp = (e) => {
         <NumBtn onClick={() => {inputData('1')}} onKeyUp={OnKeyUp}>1</NumBtn>
         <NumBtn onClick={() => {inputData('2')}} onKeyUp={OnKeyUp}>2</NumBtn>
         <NumBtn onClick={() => {inputData('3')}} onKeyUp={OnKeyUp}>3</NumBtn>
-        <OperBtn>+</OperBtn>
+        <OperBtn onClick={() => {Plus('+')}} onKeyUp={OnKeyUp}>+</OperBtn>
       </div>
       <div>
         <NumBtn onClick={() => {inputData('0')}} onKeyUp={OnKeyUp}>0</NumBtn>
