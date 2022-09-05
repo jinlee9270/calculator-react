@@ -3,13 +3,13 @@ import {ResultBox, NumBtn, OperBtn, ExtraBtn, Result, Container} from './styled.
 
 
 function App() {
-  let [result, setResult]  = useState('')
-  let [num,setNum] = useState('')
-  let [isOper, setisOper] = useState('')
+  const [result, setResult]  = useState('')
+  const [num,setNum] = useState('')
+  const [isOper, setisOper] = useState('')
 
   const inputData = (data) => {
     if (result === ''){
-      setResult(result = data)
+      setResult(data)
     }
     else {
       setResult(result + data)
@@ -68,22 +68,22 @@ const Plus = (oper) => {
   }
   else {
     if (isOper === '+') {
-      setResult(result = num + parseFloat(result))
+      setResult(num + parseFloat(result))
     }
     else if (isOper === '-') {
-      setResult(result = num - parseFloat(result))
+      setResult(num - parseFloat(result))
     }
     else if (isOper === '*') {
-      setResult(result = num * parseFloat(result))
+      setResult(num * parseFloat(result))
     }
     else if (isOper === '/') {
-      setResult(result = num / parseFloat(result))
+      setResult(num / parseFloat(result))
     }
   }
   console.log(num, result)
   // 순서 다시 확인 할 것
-  setResult(result = '')
-  setisOper(isOper = oper)
+  setResult('')
+  setisOper(oper)
 }
 
 // const Minus = () => {
@@ -99,9 +99,9 @@ const Plus = (oper) => {
 // }
 
 const ClearMemory = () => {
-  setResult(result =  '')
-  setNum(num = '')
-  setisOper(isOper = '')
+  setResult('')
+  setNum('')
+  setisOper('')
 }
 
   return (
