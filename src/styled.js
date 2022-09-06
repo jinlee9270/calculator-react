@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const NumBtn = styled.button`
     font-size: 2rem;
     margin: 5px;
-    width: 100px;
+    width: ${props => props.width || '100px'};
     height: 100px;
 `
 

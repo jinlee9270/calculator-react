@@ -67,7 +67,7 @@ const Calculate = (o) => {
       setInput(parseFloat(num) / parseFloat(input))
     }
   }
-  else if (o == '%') {
+  else if (o === '%') {
     setValue(0.01 * parseFloat(input))
     setInput(0.01 * parseFloat(input))
   }
@@ -106,7 +106,7 @@ const Calculate = (o) => {
         <OperBtn onClick={() => Calculate('+')}>+</OperBtn>
       </div>
       <div>
-        <NumBtn onClick={() => {inputData('0')}} onKeyUp={OnKeyUp}>0</NumBtn>
+        <NumBtn width = '210px' onClick={() => {inputData('0')}} onKeyUp={OnKeyUp}>0</NumBtn>
         <NumBtn onClick={() => {inputData('.')}} onKeyUp={OnKeyUp}>.</NumBtn>
         <OperBtn onClick={() => Calculate('=')}>=</OperBtn>
       </div>
