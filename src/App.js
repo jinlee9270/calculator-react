@@ -1,30 +1,32 @@
 import React, { useState } from 'react';
-import {ResultBox, NumBtn, OperBtn, ExtraBtn, Result, Container} from './styled.js';
+import { NumBtn, OperBtn, Result, ExtraBtn, Container} from './styled.js';
 
 
 function App() {
-  const [result, setResult]  = useState('')
+  const [input, setInput]  = useState('')
   const [num,setNum] = useState('')
-  const [isOper, setisOper] = useState('')
+  const [oper,setOper] = useState('')
+  const [value,setValue] = useState(0)
+  // console.log("value",value)
 
   const inputData = (data) => {
-    if (result === ''){
-      setResult(data)
+    if (input === '' || oper === '='){
+      setInput(data)
     }
     else {
-      setResult(result + data)
+      setInput(input + data)
     }
   }
 
   const SignToggle = () => {
-    if (result === '') {
-      setResult('-')
+    if (input === '') {
+      setInput('-')
     }
-    else if (result === '-') {
-      setResult('')
+    else if (input === '-') {
+      setInput('')
     }
     else {
-      setResult(-result)
+      setInput(-input)
     }
   }
 
@@ -36,105 +38,77 @@ const OnKeyUp = (e) => {
   else if (event === 'c' || event === 'esc') {
     ClearMemory()
   }
-  else if (event === '+' || event === '-' || event === '*' || event === '/') {
-    setNum(num = parseFloat(result))
-    setisOper(isOper = event)
-    if (isOper === '+'){
-      Plus()
-    }
-    // else if (isOper === '-'){
-    //   Minus()
-    // }
-    // else if (isOper === '*'){
-    //   Multiple()
-    // }
-    // else if (isOper === '/'){
-    //   Divide()
-    // }
-  }
-  else if (event === 'enter') {
-    //plus
-    //miinus
-    //multiple
-    //divide
-    console.log("enter")
-  }
 }
-
-const Plus = (oper) => {
-  if (isOper === '') {
-    setNum(num = parseFloat(result))
-    setisOper(isOper = oper)
-  }
-  else {
-    if (isOper === '+') {
-      setResult(num + parseFloat(result))
-    }
-    else if (isOper === '-') {
-      setResult(num - parseFloat(result))
-    }
-    else if (isOper === '*') {
-      setResult(num * parseFloat(result))
-    }
-    else if (isOper === '/') {
-      setResult(num / parseFloat(result))
-    }
-  }
-  console.log(num, result)
-  // 순서 다시 확인 할 것
-  setResult('')
-  setisOper(oper)
-}
-
-// const Minus = () => {
-
-// }
-
-// const Multiple = () => {
-
-// }
-
-// const Divide = () => {
-
-// }
 
 const ClearMemory = () => {
-  setResult('')
+  setInput('')
   setNum('')
-  setisOper('')
+  setValue(0)
+  setOper('')
+}
+
+const Calculate = (o) => {
+  
+  if (o === '=') {
+    if (oper === '+'){
+      setValue(parseFloat(num) + parseFloat(input))
+      setInput(parseFloat(num) + parseFloat(input))
+    }
+    else if (oper === '-'){
+      setValue(parseFloat(num) - parseFloat(input))
+      setInput(parseFloat(num) - parseFloat(input))
+    }
+    else if (oper === '*'){
+      setValue(parseFloat(num) * parseFloat(input))
+      setInput(parseFloat(num) * parseFloat(input))
+    }
+    else if (oper === '/'){
+      setValue(parseFloat(num) / parseFloat(input))
+      setInput(parseFloat(num) / parseFloat(input))
+    }
+  }
+  else if (o == '%') {
+    setValue(0.01 * parseFloat(input))
+    setInput(0.01 * parseFloat(input))
+  }
+  else{
+    setNum(input)
+    setInput('')
+    setOper(o)
+  }
 }
 
   return (
     <Container>
-      <Result id="result">{result}</Result>
+      <Result id="result">{input}</Result>
       <div>
         <ExtraBtn onKeyUp={OnKeyUp} onClick={ClearMemory}>AC</ExtraBtn>
         <ExtraBtn onClick={SignToggle}>+/-</ExtraBtn>
-        <ExtraBtn>%</ExtraBtn>
-        <OperBtn>÷</OperBtn>
+        <ExtraBtn onClick={() => Calculate('%')}>%</ExtraBtn>
+        <OperBtn onClick={() => Calculate('/')}>÷</OperBtn>
       </div>
       <div>
         <NumBtn onClick={() => {inputData('7')}} onKeyUp={OnKeyUp}>7</NumBtn>
         <NumBtn onClick={() => {inputData('8')}} onKeyUp={OnKeyUp}>8</NumBtn>
         <NumBtn onClick={() => {inputData('9')}} onKeyUp={OnKeyUp}>9</NumBtn>
-        <OperBtn>x</OperBtn>
+        <OperBtn onClick={() => Calculate('*')}>x</OperBtn>
       </div>
       <div>
         <NumBtn onClick={() => {inputData('4')}} onKeyUp={OnKeyUp}>4</NumBtn>
         <NumBtn onClick={() => {inputData('5')}} onKeyUp={OnKeyUp}>5</NumBtn>
         <NumBtn onClick={() => {inputData('6')}} onKeyUp={OnKeyUp}>6</NumBtn>
-        <OperBtn>−</OperBtn>
+        <OperBtn onClick={() => Calculate('-')}>−</OperBtn>
       </div>
       <div>
         <NumBtn onClick={() => {inputData('1')}} onKeyUp={OnKeyUp}>1</NumBtn>
         <NumBtn onClick={() => {inputData('2')}} onKeyUp={OnKeyUp}>2</NumBtn>
         <NumBtn onClick={() => {inputData('3')}} onKeyUp={OnKeyUp}>3</NumBtn>
-        <OperBtn onClick={() => {Plus('+')}} onKeyUp={OnKeyUp}>+</OperBtn>
+        <OperBtn onClick={() => Calculate('+')}>+</OperBtn>
       </div>
       <div>
         <NumBtn onClick={() => {inputData('0')}} onKeyUp={OnKeyUp}>0</NumBtn>
         <NumBtn onClick={() => {inputData('.')}} onKeyUp={OnKeyUp}>.</NumBtn>
-        <OperBtn >=</OperBtn>
+        <OperBtn onClick={() => Calculate('=')}>=</OperBtn>
       </div>
     </Container>
   );
