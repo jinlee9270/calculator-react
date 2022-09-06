@@ -8,8 +8,9 @@ export const NumBtn = styled.button`
 `
 
 export const Result = styled.div`
-    font-size: 3rem;
+    font-size: 4rem;
     margin: 5px;
+    height: 65px;
     color: white;
     background-color: #898989;
     width: 420px;
