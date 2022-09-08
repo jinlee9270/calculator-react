@@ -8,13 +8,8 @@ function App() {
   const [oper,setOper] = useState('')
   console.log('num = ',num,'input = ',input,"oper = ",oper)
 
-
   const inputData = (data) => {
     if (input === '') {
-      setInput(data)
-    }
-    else if (oper !== '' || num !== '') {
-      setNum(input)
       setInput(data)
     }
     else {
@@ -28,88 +23,89 @@ function App() {
     }
   }
 
-//키보드 이벤트 부분
-const OnKeyUp = (e) => {
-  const event = e.key
-  if (0 <= event && event <= 9){
-    inputData(event)
-  }
-  else if (event === 'c' || event === 'esc') {
-    ClearMemory()
-  }
-  else {
-    Calculate(event)
-  }
-}
-
-const ClearMemory = () => {
-  setInput('')
-  setNum(0)
-  setOper('')
-}
-
-const Calculate = (curOper) => {
-  console.log(curOper, oper)
-  if (curOper === '%') {
-    Percent()
+  //키보드 이벤트 부분
+  const OnKeyUp = (e) => {
+    const event = e.key
+    if (0 <= event && event <= 9){
+      inputData(event)
+    }
+    else if (event === 'c' || event === 'esc') {
+      ClearMemory()
+    }
+    else {
+      Calculate(event)
+    }
   }
 
-  else if (oper === '' && curOper !== '') {
-    setOper(curOper)
-    setNum(parseFloat(input))
+  const ClearMemory = () => {
+    setInput('')
+    setNum(0)
+    setOper('')
+  }
+
+  const Calculate = (curOper) => {
+    console.log(curOper, oper)
+    if (curOper === '%') {
+      setInput(0.01 * parseFloat(input))
+    }
+    else if(curOper === '+') {
+      setOper('+')
+      Plus()
+    }
+    else if(curOper === '-') {
+      setOper('-')
+      Minus()
+    }
+    else if(curOper === '*') {
+      setOper('*')
+      Multiple()
+    }
+    else if(curOper === '/') {
+      setOper('/')
+      Divide()
+    }
+    else if(curOper === '=') {
+      if (num === 0 || input === '') {
+        // console.log(1,'=')
+        setInput(0)
+      }
+      else {
+        if (oper === '+') {
+          setNum(num + parseFloat(input))
+          setInput(num + parseFloat(input))
+        }
+        else if(oper === '-') {
+          setNum(num - parseFloat(input))
+          setInput(num - parseFloat(input))
+        }
+        else if(oper === '*') {
+          setNum(num * parseFloat(input))
+          setInput(num * parseFloat(input))
+        }
+        else if(oper === '/') {
+          setNum(num / parseFloat(input))
+          setInput(num / parseFloat(input))
+        }
+      }
+    }
+  }
+
+  const Plus = () => {
+    setNum(num + parseFloat(input))
     setInput('')
   }
-
-  else if (oper !== '' && curOper === '=') {
-    if (oper === '+') {
-      Plus()
-    }
-    else if (oper === '-') {
-      Minus()
-    }
-    else if (oper === '/') {
-      Divide()
-    }
-    else if (oper === '*') {
-      Multiple()
-    }
+  const Minus = () => {
+    setNum(num - parseFloat(input))
+    setInput('')
   }
-  else if (oper !== '' && curOper !== '=') {
-    if (oper === '+') {
-      Plus()
-    }
-    else if (oper === '-') {
-      Minus()
-    }
-    else if (oper === '/') {
-      Divide()
-    }
-    else if (oper === '*') {
-      Multiple()
-    }
-    setOper(curOper)
+  const Multiple = () => {
+    setNum(num * parseFloat(input))
+    setInput('')
   }
-}
-
-const Plus = () => {
-  setInput(num + parseFloat(input))
-}
-
-const Minus = () => {
-  setInput(num - parseFloat(input))
-}
-
-const Multiple = () => {
-  setInput(num * parseFloat(input))
-}
-
-const Divide = () => {
-  setInput(num / parseFloat(input))
-}
-
-const Percent = () => {
-  setInput(0.01 * parseFloat(input))
-}
+  const Divide = () => {
+    setNum(num / parseFloat(input))
+    setInput('')
+  }
 
   return (
     <Container>
